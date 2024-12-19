@@ -15,9 +15,9 @@ Vagrant.configure("2") do |config|
         
         debian.vm.provision "chef_solo" do |chef|
             chef.cookbooks_path = "cookbooks"
-            chef.add_recipe "apache_debian"
-            chef.add_recipe "mariadb_debian"
-            chef.add_recipe "wordpress_debian"
+            chef.add_recipe "apache"
+            chef.add_recipe "mariadb"
+            chef.add_recipe "wordpress"
             chef.arguments = "--chef-license accept"
         end
     end
@@ -36,9 +36,9 @@ Vagrant.configure("2") do |config|
         end
         
         fedora.vm.provision "chef_solo" do |chef|
-            chef.add_recipe "apache_fedora"
-            chef.add_recipe "mariadb_fedora"
-            chef.add_recipe "wordpress_fedora"
+            chef.add_recipe "apache"
+            chef.add_recipe "mariadb"
+            chef.add_recipe "wordpress"
             chef.arguments = "--chef-license accept"
         end
     end

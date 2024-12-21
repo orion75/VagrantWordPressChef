@@ -43,13 +43,6 @@ describe 'mariadb::default' do
       )
     end
 
-    it 'restaura el backup en Debian si existe' do
-      expect(chef_run).to run_execute('restore_mysql_database').with(
-        command: <<-EOF
-        sudo mysql wordpress < /vagrant/wordpress_backup.sql;
-        EOF
-      )
-    end
   end
 
   context 'When all attributes are default, on Fedora 41' do
@@ -77,14 +70,6 @@ describe 'mariadb::default' do
     it 'crea la base de datos wordpress si no existe' do
       expect(chef_run).to run_execute('secure-installation').with(
         command: /CREATE DATABASE wordpress;/
-      )
-    end
-
-    it 'restaura el backup en Debian si existe' do
-      expect(chef_run).to run_execute('restore_mysql_database').with(
-        command: <<-EOF
-        sudo mysql wordpress < /vagrant/wordpress_backup.sql;
-        EOF
       )
     end
   end

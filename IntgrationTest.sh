@@ -1,11 +1,10 @@
 #!/bin/bash
 
 cd cookbooks/mariadb
-chef install
+# chef install
 
-
-kitchen destroy
-kitchen list
+# kitchen destroy
+# kitchen list
 
 # kitchen converge
 # kitchen list
@@ -15,4 +14,6 @@ kitchen list
 
 # kitchen destroy
 # kitchen list
+
+kitchen test
 cd ../../

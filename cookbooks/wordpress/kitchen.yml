@@ -1,0 +1,37 @@
+---
+driver:
+  name: vagrant
+
+provisioner:
+  name: chef_zero
+  require_chef_omnibus: true
+
+verifier:
+  name: inspec
+
+platforms:
+  - name: debian
+    driver:
+      provision: true
+      box: debian/bookworm64
+      vm_hostname: wordpress-debian
+  - name: fedora
+    driver:
+      provision: true
+      box: fedora/41-cloud-base
+      vm_hostname: wordpress-fedora
+
+suites:
+  - name: default
+    run_list:
+      - recipe[apache::default]
+      - recipe[mariadb::default]
+      - recipe[wordpress::default]
+    verifier:
+      inspec_tests:
+        - test/integration/default
+    attributes:
+      wordpress:
+        db_name: "wordpress"
+        db_user: "wordpressuser"
+        db_password: "secure_password"

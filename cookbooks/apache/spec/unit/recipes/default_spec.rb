@@ -6,15 +6,19 @@ describe 'apache::default' do
     # https://github.com/chefspec/fauxhai/blob/master/PLATFORMS.md
     platform 'debian', '11'
 
-    # it 'actualiza los repositorios' do
-    #   expect(chef_run).to run_execute('update-apt').with(command: 'sudo apt update')
-    # end
+    it 'converges successfully' do
+      expect { chef_run }.to_not raise_error
+    end
+
+    it 'actualiza los repositorios' do
+      expect(chef_run).to run_execute('update-packages').with(command: 'sudo apt update')
+    end
   
-    it 'instala el paquete apache2 en Debian' do
+    it 'instala el paquete apache2' do
       expect(chef_run).to install_package('apache2')
     end
   
-    it 'habilita y arranca el servicio apache2 en Debian' do
+    it 'habilita y arranca el servicio apache2' do
       expect(chef_run).to enable_service('apache2')
       expect(chef_run).to start_service('apache2')
     end
@@ -27,6 +31,10 @@ describe 'apache::default' do
 
     it 'converges successfully' do
       expect { chef_run }.to_not raise_error
+    end
+
+    it 'actualiza los repositorios' do
+      expect(chef_run).to run_execute('update-packages').with(command: 'sudo dnf -y update')
     end
 
     it 'instala el paquete httpd' do

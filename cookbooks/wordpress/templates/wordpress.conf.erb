@@ -1,26 +1,16 @@
-<?php
-define( 'DB_NAME', '<%= @db_name %>' );
-define( 'DB_USER', '<%= @db_user %>' );
-define( 'DB_PASSWORD', '<%= @db_password %>' );
-define( 'DB_HOST', 'localhost' );
-define( 'DB_CHARSET', 'utf8' );
-define( 'DB_COLLATE', '' );
+<VirtualHost *:80>
 
-define( 'AUTH_KEY',         'put your unique phrase here' );
-define( 'SECURE_AUTH_KEY',  'put your unique phrase here' );
-define( 'LOGGED_IN_KEY',    'put your unique phrase here' );
-define( 'NONCE_KEY',        'put your unique phrase here' );
-define( 'AUTH_SALT',        'put your unique phrase here' );
-define( 'SECURE_AUTH_SALT', 'put your unique phrase here' );
-define( 'LOGGED_IN_SALT',   'put your unique phrase here' );
-define( 'NONCE_SALT',       'put your unique phrase here' );
+        DocumentRoot /var/www/wordpress
 
-$table_prefix = 'wp_';
+        <Directory /var/www/wordpress>
+                Options FollowSymLinks
+                AllowOverride Limit Options FileInfo
+                DirectoryIndex index.php
+                Require all granted
+        </Directory>
+        <Directory /var/www/wordpress/wp-content>
+                Options FollowSymLinks
+                 Require all granted
+        </Directory>
 
-define( 'WP_DEBUG', false );
-
-if ( ! defined( 'ABSPATH' ) ) {
-    define( 'ABSPATH', __DIR__ . '/' );
-}
-
-require_once ABSPATH . 'wp-settings.php';
+</VirtualHost>

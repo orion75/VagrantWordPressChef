@@ -1,0 +1,31 @@
+---
+driver:
+  name: vagrant
+
+provisioner:
+  name: chef_zero
+  # cookbook_path:
+  #   - cookbooks/apache
+  #   - cookbooks/mariadb
+
+verifier:
+  name: inspec
+
+platforms:
+  - name: debian
+    driver:
+      provision: true
+      box: debian/bookworm64
+      vm_hostname: wordpress-debian
+  - name: fedora
+    driver:
+      provision: true
+      box: fedora/41-cloud-base
+      vm_hostname: wordpress-fedora
+
+suites:
+  - name: default
+    verifier:
+      inspec_tests:
+        - test/integration/default
+    attributes:

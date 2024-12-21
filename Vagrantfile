@@ -1,4 +1,31 @@
 Vagrant.configure("2") do |config|
+    
+    # Configuración para debian
+    config.vm.define "test" do |testing|
+        # Configura el sistema operativo base. Aquí usamos la caja oficial de Debian 12.
+        testing.vm.box = "ubuntu/focal64"
+        testing.vm.provision "shell", inline: <<-SHELL
+            # Instalar ChefDK
+            wget -qO- https://omnitruck.chef.io/install.sh | sudo bash -s -- -P chefdk
+            export CHEF_LICENSE="accept"
+            # Instalar las gemas necesarias para las pruebas
+            cd /vagrant/cookbooks/apache && chef exec bundle install
+            cd /vagrant/cookbooks/mariadb && chef exec bundle install
+            cd /vagrant/cookbooks/wordpress && chef exec bundle install
+            chown -R vagrant:vagrant /opt/chefdk
+        SHELL
+        # Configura la cantidad de memoria RAM y los CPUs asignados a la VM.
+        testing.vm.provider "virtualbox" do |vb|
+            vb.name = "Testing"  # Nombre de la máquina en VirtualBox.
+            vb.memory = "1024"  # Asigna 1 GB de RAM.
+            vb.cpus = 2         # Asigna 2 CPUs.
+        end
+    end
+
+
+
+
+
 
     # Configuración para debian
     config.vm.define "debian_vm" do |debian|
